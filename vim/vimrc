@@ -4,8 +4,8 @@
 " BASIC SETTINGS {{{ ----------------------------------------------------------
 
 set nocompatible                  " Must come first because it changes other options.
-
-silent! call pathogen#runtime_append_all_bundles()
+autocmd!
+filetype off
 
 syntax enable                     " Turn on syntax highlighting.
 colorscheme cobalt                " Colors for syntax highlighting.
@@ -13,6 +13,10 @@ filetype plugin indent on         " Turn on file type detection.
 
 set term=xterm-256color
 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+set shortmess=atI                 " Disables splash screen
 
 set showcmd                       " Display incomplete commands.
 set showmode                      " Display the mode you're in.
@@ -77,9 +81,19 @@ autocmd BufNewFile,BufRead *.less set filetype=less
 
 
 " }}}
+" BUNDLES {{{ ----------------------------------------------------------
+
+Bundle 'gmarik/vundle.git'
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-surround.git'
+Bundle 'scrooloose/nerdtree.git'
+
+
+" }}}
 " BUNDLE SETTINGS {{{ ----------------------------------------------------------
 
 " nerdtree
+autocmd vimenter * NERDTree                      "autolaunch nerdtree
 let g:NERDTreeWinSize=40
 let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeShowHidden=1
@@ -88,6 +102,7 @@ let g:NERDTreeIgnore=['\.git$']
 nmap <Leader>n :NERDTreeCWD<cr>
 nmap <Leader>nf :NERDTreeFind<cr>
 nmap <Leader>nc :NERDTreeClose<cr>
+map <C-n> :NERDTreeToggle<CR>
 
 
 " fugitive (git)
