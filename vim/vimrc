@@ -8,13 +8,22 @@ autocmd!
 filetype off
 
 syntax enable                     " Turn on syntax highlighting.
-colorscheme cobalt                " Colors for syntax highlighting.
 filetype plugin indent on         " Turn on file type detection.
 
 set term=xterm-256color
+let &t_Co=256
+set background=dark
+colorscheme solarized
+
+let g:solarized_termcolors = 256
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
+set timeoutlen=500
+let mapleader=","
 
 set shortmess=atI                 " Disables splash screen
 
@@ -48,6 +57,7 @@ set nobackup                      " Don't make a backup before overwriting a fil
 set nowritebackup                 " And again.
 set noswapfile
 
+let NERDTreeIgnore=['\.DS_Store$', '\.vim$', '\.gitignore']
 
 set tabstop=4                    " Global tab width.
 set shiftwidth=4                 " And again, related.
@@ -55,7 +65,7 @@ set expandtab                    " Use spaces instead of tabs
 
 set mouse=n
 set ttymouse=xterm2
-
+set ttyfast
 set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
@@ -64,10 +74,7 @@ set autoindent
 set smartindent
 
 " Swap colon and semicolon for easier commands
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+map ; :
 
 " folding setup
 let php_folding = 1
@@ -83,11 +90,13 @@ autocmd BufNewFile,BufRead *.less set filetype=less
 " }}}
 " BUNDLES {{{ ----------------------------------------------------------
 
+
 Bundle 'gmarik/vundle.git'
 Bundle 'tpope/vim-fugitive.git'
+Bundle 'Lokaltog/vim-powerline.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'scrooloose/nerdtree.git'
-
+Bundle 'ctrlp.vim'
 
 " }}}
 " BUNDLE SETTINGS {{{ ----------------------------------------------------------
@@ -96,13 +105,13 @@ Bundle 'scrooloose/nerdtree.git'
 autocmd vimenter * NERDTree                      "autolaunch nerdtree
 let g:NERDTreeWinSize=40
 let g:NERDTreeQuitOnOpen=1
-let g:NERDTreeShowHidden=1
+let g:NERDTreeShowHidden=0
 let g:NERDTreeIgnore=['\.git$']
 
 nmap <Leader>n :NERDTreeCWD<cr>
 nmap <Leader>nf :NERDTreeFind<cr>
 nmap <Leader>nc :NERDTreeClose<cr>
-map <C-n> :NERDTreeToggle<CR>
+nmap <Leader>nt :NERDTreeToggle<cr>
 
 
 " fugitive (git)
@@ -118,3 +127,14 @@ nmap <Leader>gt :w<cr>:bd<cr>:diffoff!<cr>
 nmap <Leader>gta :Gread<cr>:w<cr>:bd<cr>:diffoff!<cr>
 " clean up all those buffers fugitive leaves behind
 nmap <Leader>gbd :bdelete fugitive://<C-A><cr>
+
+nmap <Leader><space> :noh<cr
+
+" ctrlp
+nnoremap <C-O> :CtrlPBuffer<cr>
+let g:ctrlp_working_path_mode = 0
+
+
+" powerline
+let g:Powerline_symbols = 'fancy'
+call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
