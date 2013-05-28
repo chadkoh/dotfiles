@@ -77,7 +77,9 @@ map ; :
 " folding setup
 let php_folding = 1
 autocmd FileType css,php setlocal foldmethod=syntax
-autocmd FileType html.twig setlocal foldmethod=marker foldmarker={%\ block,{%\ endblock
+autocmd FileType html.twig setlocal foldmethod=marker foldmarker={%\ block,{%\ endbloc
+" allow space to toggle folding
+noremap <Space> za
 
  " filetype setup
 autocmd BufNewFile,BufRead *.html.twig set syntax=html.twig
@@ -135,7 +137,7 @@ nmap <Leader>gta :Gread<cr>:w<cr>:bd<cr>:diffoff!<cr>
 " clean up all those buffers fugitive leaves behind
 nmap <Leader>gbd :bdelete fugitive://<C-A><cr>
 
-nmap <Leader><space> :noh<cr
+nmap <Leader><space> :noh<cr>
 
 " ctrlp
 nnoremap <C-O> :CtrlPBuffer<cr>
