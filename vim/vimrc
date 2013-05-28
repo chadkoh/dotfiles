@@ -57,8 +57,6 @@ set nobackup                      " Don't make a backup before overwriting a fil
 set nowritebackup                 " And again.
 set noswapfile
 
-let NERDTreeIgnore=['\.DS_Store$', '\.vim$', '\.gitignore']
-
 set tabstop=4                    " Global tab width.
 set shiftwidth=4                 " And again, related.
 set expandtab                    " Use spaces instead of tabs
@@ -81,22 +79,31 @@ let php_folding = 1
 autocmd FileType css,php setlocal foldmethod=syntax
 autocmd FileType html.twig setlocal foldmethod=marker foldmarker={%\ block,{%\ endblock
 
-" filetype setup
+ " filetype setup
 autocmd BufNewFile,BufRead *.html.twig set syntax=html.twig
 autocmd BufNewFile,BufRead *.less set syntax=css
 autocmd BufNewFile,BufRead *.less set filetype=less
+autocmd BufNewFile,BufRead *.html.twig set syntax=html.twig filetype=html.twig
 
+" code completion setup
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 
 " }}}
 " BUNDLES {{{ ----------------------------------------------------------
 
-
 Bundle 'gmarik/vundle.git'
+Bundle 'airblade/vim-gitgutter.git'
 Bundle 'tpope/vim-fugitive.git'
 Bundle 'Lokaltog/vim-powerline.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'scrooloose/nerdtree.git'
-Bundle 'ctrlp.vim'
+Bundle 'kien/ctrlp.vim.git'
+Bundle 'groenewege/vim-less.git'
+Bundle 'beyondwords/vim-twig.git'
+
 
 " }}}
 " BUNDLE SETTINGS {{{ ----------------------------------------------------------
@@ -104,9 +111,9 @@ Bundle 'ctrlp.vim'
 " nerdtree
 autocmd vimenter * NERDTree                      "autolaunch nerdtree
 let g:NERDTreeWinSize=40
-let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeQuitOnOpen=0
 let g:NERDTreeShowHidden=0
-let g:NERDTreeIgnore=['\.git$']
+let g:NERDTreeIgnore=['\.git$', '\.DS_Store$', '\.vim$', '\.gitignore']
 
 nmap <Leader>n :NERDTreeCWD<cr>
 nmap <Leader>nf :NERDTreeFind<cr>
@@ -133,6 +140,7 @@ nmap <Leader><space> :noh<cr
 " ctrlp
 nnoremap <C-O> :CtrlPBuffer<cr>
 let g:ctrlp_working_path_mode = 0
+let g:ctrlp_by_filename = 1                   " Set this to 1 to set searching by filename (as opposed to full path)
 
 
 " powerline
