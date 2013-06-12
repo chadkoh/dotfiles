@@ -17,7 +17,7 @@ colorscheme solarized
 
 let g:solarized_termcolors = 256
 let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
+let g:solarized_contrast = "normal"
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -61,15 +61,24 @@ set tabstop=4                    " Global tab width.
 set shiftwidth=4                 " And again, related.
 set expandtab                    " Use spaces instead of tabs
 
+set pastetoggle=<F12>
+
 set mouse=n
 set ttymouse=xterm2
 set ttyfast
 set laststatus=2                  " Show the status line all the time
+
+nnoremap vv ^v$h
+
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 set autoindent
 set smartindent
+
+" re-read vimrc after writing it
+autocmd BufWritePost *vimrc source $HOME/.vimrc | call Pl#Load()
+autocmd BufRead *vimrc,*zshrc,*tmux.conf setlocal foldmethod=marker
 
 " Swap colon and semicolon for easier commands
 map ; :
@@ -94,7 +103,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 
 " }}}
-" BUNDLES {{{ ----------------------------------------------------------
+" BUNDLES {{{ ------------------------------------------------------------------
 
 Bundle 'gmarik/vundle.git'
 Bundle 'airblade/vim-gitgutter.git'
@@ -105,13 +114,22 @@ Bundle 'scrooloose/nerdtree.git'
 Bundle 'kien/ctrlp.vim.git'
 Bundle 'groenewege/vim-less.git'
 Bundle 'beyondwords/vim-twig.git'
+Bundle 'terryma/vim-multiple-cursors.git'
 
 
 " }}}
 " BUNDLE SETTINGS {{{ ----------------------------------------------------------
 
 " nerdtree
-autocmd vimenter * NERDTree                      "autolaunch nerdtree
+
+if bufname("%") != ''
+    autocmd vimenter * NERDTree                      "autolaunch nerdtree
+else
+
+endif
+
+
+
 let g:NERDTreeWinSize=40
 let g:NERDTreeQuitOnOpen=0
 let g:NERDTreeShowHidden=0
